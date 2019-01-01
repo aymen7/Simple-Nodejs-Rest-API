@@ -1,9 +1,9 @@
-// required mongoose
-const mongoose = require('mongoose');
+// required our mongoose db
+const db = require('./db');
 // required validator
 const validator = require('validator');
 // create a schema instance
-const Schema = mongoose.Schema
+const Schema = db.Schema;
 // create a userSchema
 const userSchema = new Schema({
     'name': String,
@@ -21,4 +21,4 @@ const userSchema = new Schema({
     'password': String,
 });
 
-module.exports = mongoose.model('user',userSchema,'users');  // mongoose.model(name,schema,collection name in the db)
+module.exports = db.model('user',userSchema,'users');  // mongoose.model(name,schema,collection name in the db)
