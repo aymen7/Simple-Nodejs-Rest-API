@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+// we are getting the public key from the our local environment
+const secret_key = process.env.API_SECRET_KEY;
 // get the user model
 const User = require('../models/users.model');
 
@@ -17,8 +20,12 @@ exports.loginUser  = (req, res) => {
                     res.status(401).send('invalid email or password');
                 }
                 else{
-                    // send 200 status if both the email and password matches
-                    res.status(200).send(user);
+                    // set the payload to be an object with the key subject and the value og the user._id
+                    let payload = {subject: user._id};
+                    // generate the token using the jwt.sign(payload,key,{additionalOptions})
+                    let token = jwt.sign(payload,secret_key,{expiresIn: '12h'});
+                    // send 200 status and the token 
+                    res.status(200).send({token});
                 }
             }
         }
